@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Launch EC2 Instances with SNMPv2 and SSH Key-Based Authentication</title>
+</head>
+<body>
+	<h1>Launch Two Amazon Linux 2 EC2 Instances with SNMPv2 and SSH Key-Based Authentication</h1>
+	<form method="POST" action="/lambda_function">
+		<label for="region">AWS Region:</label>
+		<input type="text" id="region" name="region"><br><br>
+		
+		<label for="ami-id">AMI ID:</label>
+		<input type="text" id="ami-id" name="ami-id"><br><br>
+		
+		<label for="instance-type">Instance Type:</label>
+		<input type="text" id="instance-type" name="instance-type"><br><br>
+		
+		<label for="subnet-id">Subnet ID:</label>
+		<input type="text" id="subnet-id" name="subnet-id"><br><br>
+		
+		<label for="security-group-id">Security Group ID:</label>
+		<input type="text" id="security-group-id" name="security-group-id"><br><br>
+		
+		<label>Key Name:</label>
+		<input type="text" id="key-name" name="key_pair_name"><br><br>		
+		
+		<label for="community-string">Community String:</label>
+		<input type="text" id="community-string" name="community-string"><br><br>
+		
+		<label for="hostname-1">Hostname 1:</label>
+		<input type="text" id="hostname-1" name="hostname-1"><br><br>
+		
+		<label for="hostname-2">Hostname 2:</label>
+		<input type="text" id="hostname-2" name="hostname-2"><br><br>
+
+		<input type="submit" value="Submit">
+	</form>
+</body>
+</html>

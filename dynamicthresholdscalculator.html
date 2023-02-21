@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<form id="myForm">
+		<label for="high_band_value">High Band Value:</label>
+		<input type="number" id="high_band_value" name="high_band_value"><br><br>
+		<label for="middle_value">Middle Value:</label>
+		<input type="number" id="middle_value" name="middle_value"><br><br>
+		<label for="low_band_value">Low Band Value:</label>
+		<input type="number" id="low_band_value" name="low_band_value"><br><br>
+		<label for="band_factor_value">Band Factor Value:</label>
+		<input type="number" id="band_factor_value" name="band_factor_value"><br><br>
+		<button type="button" onclick="calculateThresholds()">Calculate</button><br><br>
+		<label for="calculated_upper_threshold">Calculated Upper Threshold:</label>
+		<input type="number" id="calculated_upper_threshold" name="calculated_upper_threshold" readonly><br><br>
+		<label for="calculated_lower_threshold">Calculated Lower Threshold:</label>
+		<input type="number" id="calculated_lower_threshold" name="calculated_lower_threshold" readonly><br><br>
+	</form>
+	<script>
+		function calculateThresholds() {
+			const high_band_value = Number(document.getElementById('high_band_value').value);
+			const middle_value = Number(document.getElementById('middle_value').value);
+			const low_band_value = Number(document.getElementById('low_band_value').value);
+			const band_factor_value = Number(document.getElementById('band_factor_value').value);
+
+			const calculated_upper_threshold = high_band_value + ((high_band_value - middle_value) * band_factor_value);
+			const calculated_lower_threshold = low_band_value - ((middle_value - low_band_value) * band_factor_value);
+
+			document.getElementById('calculated_upper_threshold').value = calculated_upper_threshold;
+			document.getElementById('calculated_lower_threshold').value = calculated_lower_threshold;
+		}
+	</script>
+</body>
+</html>
