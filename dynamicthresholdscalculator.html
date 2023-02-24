@@ -24,7 +24,7 @@
 			const band_factor_value = Number(document.getElementById('band_factor_value').value);
 
 			const calculated_upper_threshold = high_band_value + ((high_band_value - middle_value) * band_factor_value);
-			const calculated_lower_threshold = low_band_value - ((middle_value - low_band_value) * band_factor_value);
+			const calculated_lower_threshold = low_band_value - ((low_band_value - middle_value) * band_factor_value);
 
 			document.getElementById('calculated_upper_threshold').value = calculated_upper_threshold;
 			document.getElementById('calculated_lower_threshold').value = calculated_lower_threshold;
