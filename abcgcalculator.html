@@ -23,6 +23,7 @@
 		<button type="button" onclick="calculateNumInstances()">Calculate</button><br><br>
 		<label for="num_instances">Number of Instances:</label>
 		<input type="text" id="num_instances" name="num_instances" readonly><br><br>
+		<button type="button" onclick="goBack()">Back to Home Page</button>
 	</form>
 	<script>
 		function calculateNumInstances() {
@@ -33,6 +34,10 @@
 			const num_instances = Math.sqrt(target_collector_mem/med_collector_mem) * instance_threshold;
 
 			document.getElementById('num_instances').value = num_instances;
+		}
+
+		function goBack() {
+			window.location.href = "/home.html";
 		}
 	</script>
 </body>

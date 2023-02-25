@@ -27,6 +27,7 @@
 		<input type="number" id="calculated_upper_threshold" name="calculated_upper_threshold" readonly><br><br>
 		<label for="calculated_lower_threshold">Calculated Lower Threshold:</label>
 		<input type="number" id="calculated_lower_threshold" name="calculated_lower_threshold" readonly><br><br>
+		<button type="button" onclick="goToHomePage()">Back to Home Page</button>
 	</form>
 	<script>
 		function calculateThresholds() {
@@ -40,6 +41,10 @@
 
 			document.getElementById('calculated_upper_threshold').value = calculated_upper_threshold;
 			document.getElementById('calculated_lower_threshold').value = calculated_lower_threshold;
+		}
+
+		function goToHomePage() {
+			window.location.href = "/home.html";
 		}
 	</script>
 </body>
