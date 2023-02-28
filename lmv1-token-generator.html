@@ -3,33 +3,47 @@
   <head>
     <title>LMv1 Token Generator</title>
     <style>
-        label {
-            display: inline-block;
-            width: 100px;
-            margin-bottom: 10px;
-          }
-          input {
-            display: inline-block;
-            width: 200px;
-            margin-bottom: 10px;
-          }
-          button {
-            margin-top: 10px;
-          }
-          #lmv1_token {
-            margin-top: 10px;
-          }
-          #back_button {
-            margin-top: 20px;
-          }
-		body {
-			font-family: Arial, sans-serif;
-		}
-		iframe {
-			all: unset;
-			font-family: Arial, sans-serif;
-		}
-	</style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      iframe {
+        all: unset;
+        font-family: Arial, sans-serif;
+      }
+      label {
+        display: inline-block;
+        width: 100px;
+        margin-bottom: 10px;
+      }
+      input {
+        display: inline-block;
+        width: 200px;
+        margin-bottom: 10px;
+      }
+      button {
+        margin-top: 10px;
+      }
+      #lmv1_token {
+        margin-top: 10px;
+        width: 500px;
+        height: 100px;
+        resize: none;
+      }
+      #output {
+        margin-top: 10px;
+      }
+      #back_button {
+        margin-top: 10px;
+        display: block;
+      }
+      .copy-button {
+        margin-left: 10px;
+      }
+      #copy_confirmation {
+        margin-top: 10px;
+        display: none;
+      }
+    </style>
     <script src="/js/lmv1_token_generator.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
   </head>
@@ -42,11 +56,43 @@
       <label for="access_key">Access Key:</label>
       <input type="password" id="access_key" name="access_key"><br>
 
-      <button type="button" onclick="generateLmv1Token()">Generate Token</button>
+      <button type="button" onclick="generateLmv1Token(); resetCopyConfirmation();">Generate Token</button>
     </form>
 
-    <p id="lmv1_token"></p>
+    <div id="output">
+      <textarea id="lmv1_token" readonly></textarea>
+      <button class="copy-button" onclick="copyToClipboard('lmv1_token')">Copy</button>
 
-    <button onclick="location.href = 'index.html';">Back to Home Page</button>
+      <div id="copy_confirmation"></div>
+
+      <button id="back_button" onclick="location.href = 'index.html';">Back to Home Page</button>
+    </div>
+
+    <script>
+      function copyToClipboard(id) {
+        var text = document.getElementById(id).value;
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        showCopyConfirmation();
+      }
+
+      function showCopyConfirmation() {
+        var confirmationDiv = document.getElementById("copy_confirmation");
+        confirmationDiv.innerHTML = "LMv1 token copied to clipboard!";
+        confirmationDiv.style.display = "block";
+      }
+
+      function generateLmv1Token() {
+        var accessId = document.getElementById("access_id").value;
+        var accessKey = document.getElementById("access_key").value;
+        var lmv1Token = generateEncodedLmv1Token(accessId, accessKey);
+        document.getElementById("lmv1_token").value = lmv1Token;
+        document.getElementById("copy_confirmation").style.display = "none";
+      }
+    </script>
   </body>
 </html>

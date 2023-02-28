@@ -1,34 +1,50 @@
+function generateEncodedLmv1Token(accessId, accessKey) {
+  // Get current time in Unix epoch format
+  var timestamp = Math.floor(Date.now() / 1000);
+
+  // Construct message to sign
+  var message = accessId + "\n" + timestamp + "\n";
+
+  // Generate signature using CryptoJS.HmacSHA256
+  var signature = CryptoJS.HmacSHA256(message, accessKey);
+
+  // Convert signature to Base64
+  var signatureBase64 = CryptoJS.enc.Base64.stringify(signature);
+
+  // Construct LMv1 token
+  var lmv1Token = "LMv1 " + accessId + ":" + signatureBase64 + ":" + timestamp;
+
+  // Encode LMv1 token using encodeURIComponent
+  var encodedToken = encodeURIComponent(lmv1Token);
+
+  return encodedToken;
+}
+
+function copyToClipboard(id) {
+  var text = document.getElementById(id).value;
+  var textarea = document.createElement("textarea");
+  textarea.value = text;
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+  showCopyConfirmation();
+}
+
+function showCopyConfirmation() {
+  var confirmationDiv = document.getElementById("copy_confirmation");
+  confirmationDiv.innerHTML = "LMv1 token copied to clipboard!";
+  confirmationDiv.style.display = "block";
+}
+
 function generateLmv1Token() {
-  const access_id = document.getElementById("access_id").value;
-  const access_key = document.getElementById("access_key").value;
-
-  // Concatenate Access ID and Access Key with a colon
-  const message = `${access_id}:${access_key}`;
-
-  // Create an SHA256 hash of the message using Access Key as the key
-  const sha256_hash = CryptoJS.HmacSHA256(message, access_key).toString();
-
-  // Base64-encode the hash
-  const base64_hash = btoa(hexToBytes(sha256_hash));
-
-  // Concatenate Access ID, colon, and Base64-encoded hash with a colon
-  const lmv1_token = `LMv1 ${access_id}:${base64_hash}:`;
-
-  // Display the LMv1 token on the page
-  document.getElementById("lmv1_token").innerHTML = `Your LMv1 token is: <code>${lmv1_token}</code>`;
+  var accessId = document.getElementById("access_id").value;
+  var accessKey = document.getElementById("access_key").value;
+  var lmv1Token = generateEncodedLmv1Token(accessId, accessKey);
+  document.getElementById("lmv1_token").value = lmv1Token;
 }
 
-// Helper function to convert a hex string to a byte array
-function hexToBytes(hex) {
-  const bytes = [];
-
-  for (let i = 0; i < hex.length; i += 2) {
-    bytes.push(parseInt(hex.substr(i, 2), 16));
-  }
-
-  return bytes;
+function resetCopyConfirmation() {
+  var confirmationDiv = document.getElementById("copy_confirmation");
+  confirmationDiv.style.display = "none";
 }
-
-// Add event listener to the Generate Token button
-const generateTokenButton = document.getElementById("generate_token");
-generateTokenButton.addEventListener("click", generateLmv1Token);
