@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LMv1 Token Generator</title>
+    <style>
+        label {
+            display: inline-block;
+            width: 100px;
+            margin-bottom: 10px;
+          }
+          input {
+            display: inline-block;
+            width: 200px;
+            margin-bottom: 10px;
+          }
+          button {
+            margin-top: 10px;
+          }
+          #lmv1_token {
+            margin-top: 10px;
+          }
+          #back_button {
+            margin-top: 20px;
+          }
+		body {
+			font-family: Arial, sans-serif;
+		}
+		iframe {
+			all: unset;
+			font-family: Arial, sans-serif;
+		}
+	</style>
+    <script src="/js/lmv1_token_generator.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+  </head>
+  <body>
+    <p>Enter your Access ID and Access Key to generate an LMv1 token:</p>
+    <form>
+      <label for="access_id">Access ID:</label>
+      <input type="text" id="access_id" name="access_id"><br>
+
+      <label for="access_key">Access Key:</label>
+      <input type="password" id="access_key" name="access_key"><br>
+
+      <button type="button" onclick="generateLmv1Token()">Generate Token</button>
+    </form>
+
+    <p id="lmv1_token"></p>
+
+    <button onclick="location.href = 'index.html';">Back to Home Page</button>
+  </body>
+</html>
