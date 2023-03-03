@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Date Difference Calculator</title>
+    <style>
+      label,
+      input,
+      button {
+        display: inline-block;
+        margin-bottom: 10px;
+      }
+      label {
+        width: 80px;
+      }
+      input {
+        width: 150px;
+      }
+      button {
+        margin-left: 10px;
+      }
+      body {
+        font-family: Arial, sans-serif;
+    }
+      iframe {
+        all: unset;
+        font-family: Arial, sans-serif;
+    }
+    </style>
+    <script>
+      function calculateDifference() {
+        // Get the input values
+        var startDate = new Date(document.getElementById("start-date").value);
+        var endDate = new Date(document.getElementById("end-date").value);
+
+        // Calculate the difference in days
+        var timeDifference = endDate.getTime() - startDate.getTime();
+        var dayDifference = timeDifference / (1000 * 3600 * 24);
+
+        // Display the result
+        document.getElementById("result").innerHTML =
+          "The difference between " +
+          startDate.toDateString() +
+          " and " +
+          endDate.toDateString() +
+          " is " +
+          dayDifference +
+          " days.";
+      }
+    </script>
+  </head>
+  <body>
+    <p>Enter two dates to calculate the difference between them:</p>
+    <label for="start-date">Start date:</label>
+    <input type="date" id="start-date" name="start-date" /><br />
+    <label for="end-date">End date:</label>
+    <input type="date" id="end-date" name="end-date" /><br />
+    <button onclick="calculateDifference()">Calculate</button>
+    <p id="result"></p>
+    <button onclick="goToHomePage()">Back to Home page</button>
+    <script>
+      function goToHomePage() {
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>
