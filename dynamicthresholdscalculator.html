@@ -5,28 +5,61 @@
 	<style>
 		body {
 			font-family: Arial, sans-serif;
-		}
-		iframe {
-			all: unset;
-			font-family: Arial, sans-serif;
-		}
+		  }
+		  label {
+			display: inline-block;
+			margin-right: 10px;
+			width: 150px;
+			text-align: left;
+		  }
+		  input[type="text"], input[type="number"] {
+			width: 200px;
+			padding: 5px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			text-align: right;
+			overflow: hidden;
+		  }
+		  .output {
+			margin-top: 20px;
+		  }
+		  button {
+			margin-top: 10px;
+			padding: 5px 10px;
+			border: none;
+			border-radius: 5px;
+			background-color: #007bff;
+			color: #fff;
+			cursor: pointer;
+			display: block;
+		  }
+		  button:hover {
+			background-color: #0069d9;
+		  }
 	</style>
 </head>
 <body>
 	<form id="myForm">
 		<label for="low_band_value">Low Band Value:</label>
-		<input type="text" id="low_band_value" name="low_band_value" pattern="\d*" required><br><br>
+		<input type="text" id="low_band_value" name="low_band_value" pattern="\d*" required>
+		<br><br>
 		<label for="high_band_value">High Band Value:</label>
-		<input type="text" id="high_band_value" name="high_band_value" pattern="\d*" required><br><br>
+		<input type="text" id="high_band_value" name="high_band_value" pattern="\d*" required>
+		<br><br>
 		<label for="middle_value">Middle Value:</label>
-		<input type="text" id="middle_value" name="middle_value" pattern="\d*" required><br><br>
+		<input type="text" id="middle_value" name="middle_value" pattern="\d*" required>
+		<br><br>
 		<label for="band_factor_value">Band Factor Value:</label>
-		<input type="text" id="band_factor_value" name="band_factor_value" pattern="\d*" required><br><br>
-		<button type="button" onclick="calculateThresholds()">Calculate</button><br><br>
+		<input type="text" id="band_factor_value" name="band_factor_value" pattern="\d*" required>
+		<br><br>
+		<button type="button" onclick="calculateThresholds()">Calculate</button>
+		<br><br>
 		<label for="calculated_upper_threshold">Calculated Upper Threshold:</label>
-		<input type="number" id="calculated_upper_threshold" name="calculated_upper_threshold" readonly><br><br>
+		<input type="number" id="calculated_upper_threshold" name="calculated_upper_threshold" readonly>
+		<br><br>
 		<label for="calculated_lower_threshold">Calculated Lower Threshold:</label>
-		<input type="number" id="calculated_lower_threshold" name="calculated_lower_threshold" readonly><br><br>
+		<input type="number" id="calculated_lower_threshold" name="calculated_lower_threshold" readonly>
+		<br><br>
 		<button type="button" onclick="goToHomePage()">Back to Home Page</button>
 	</form>
 	<script>

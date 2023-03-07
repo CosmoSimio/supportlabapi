@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Epoch Time Converter</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input[type="text"] {
+        width: 200px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: right;
+        overflow: hidden;
+      }
+      .output {
+        margin-top: 20px;
+      }
+      button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: #0069d9;
+      }
+    </style>
+  </head>
+  <body>
+    <p>Enter epoch time (in seconds):</p>
+    <label>
+      Epoch Time:
+      <input type="text" id="epoch-time">
+    </label>
+    <button onclick="convertEpochTime()">Convert</button>
+    <div class="output">
+      <p>UTC Time:</p>
+      <p id="utc-time"></p>
+      <p>Local Time:</p>
+      <p id="local-time"></p>
+    </div>
+    <button onclick="goToHomePage()">Back to home page</button>
+    <script>
+      function convertEpochTime() {
+        const epochTime = document.getElementById("epoch-time").value;
+        const utcTime = new Date(epochTime * 1000).toUTCString();
+        const localTime = new Date(epochTime * 1000).toString();
+        document.getElementById("utc-time").textContent = utcTime;
+        document.getElementById("local-time").textContent = localTime;
+      }
+      
+      function goToHomePage() {
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
+</html>
