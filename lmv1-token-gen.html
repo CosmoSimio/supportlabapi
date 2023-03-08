@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LMv1 Token Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      label {
+        display: inline-block;
+        margin-right: 10px;
+        width: 100px;
+        text-align: left;
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="password"] {
+        width: 200px;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-align: right;
+        overflow: hidden;
+        margin-right: 10px;
+        box-sizing: border-box;
+      }
+
+      .output {
+        margin-top: 20px;
+        width: 380px;
+      }
+
+      #lmv1_token {
+        width: 100%;
+        height: 100px;
+      }
+
+      button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        display: block;
+      }
+
+      button:hover {
+        background-color: #0069d9;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.min.js"></script>
+    <script>
+        function generateEncodedLmv1Token(accessId, accessKey) {
+          // Get current time in Unix epoch format
+          var timestamp = Math.floor(Date.now() / 1000);
+      
+          // Construct message to sign
+          var message = accessId + "\n" + timestamp + "\n";
+      
+          // Generate signature using CryptoJS.HmacSHA256
+          var signature = CryptoJS.HmacSHA256(message, accessKey);
+      
+          // Convert signature to Base64
+          var signatureBase64 = CryptoJS.enc.Base64.stringify(signature);
+      
+          // Construct LMv1 token
+          var lmv1Token = "LMv1 " + accessId + ":" + signatureBase64 + ":" + timestamp;
+      
+          // Encode LMv1 token using encodeURIComponent
+          var encodedToken = encodeURIComponent(lmv1Token);
+      
+          return encodedToken;
+        }
+      
+        function generateDecodedLmv1Token(encodedToken) {
+        var decodedToken = decodeURIComponent(encodedToken);
+        var lmv1Token = decodedToken.split(" ")[1];
+        return "LMv1 " + lmv1Token;
+        }
+      
+        function generateEncodedLmv1TokenAndCopyToClipboard() {
+          var accessId = document.getElementById("access_id").value;
+          var accessKey = document.getElementById("access_key").value;
+          var lmv1Token = generateEncodedLmv1Token(accessId, accessKey);
+          document.getElementById("lmv1_token").value = lmv1Token;
+          resetCopyConfirmation();
+        }
+      
+        function generateDecodedLmv1TokenAndCopyToClipboard() {
+          var accessId = document.getElementById("access_id").value;
+          var accessKey = document.getElementById("access_key").value;
+          var encodedToken = generateEncodedLmv1Token(accessId, accessKey);
+          var decodedToken = generateDecodedLmv1Token(encodedToken);
+          document.getElementById("lmv1_token").value = decodedToken;
+          resetCopyConfirmation();
+        }
+      
+        function copyToClipboard(id) {
+          var text = document.getElementById(id).value;
+          var textarea = document.createElement("textarea");
+          textarea.value = text;
+          document.body.appendChild(textarea);
+          textarea.select();
+          document.execCommand("copy");
+          document.body.removeChild(textarea);
+          showCopyConfirmation();
+        }
+      
+        function showCopyConfirmation() {
+          var confirmationDiv = document.getElementById("copy_confirmation");
+          confirmationDiv.innerHTML = "LMv1 token copied to clipboard!";
+          confirmationDiv.style.display = "block";
+        }
+      
+        function resetCopyConfirmation() {
+          var confirmationDiv = document.getElementById("copy_confirmation");
+          confirmationDiv.innerHTML = "";
+          confirmationDiv.style.display = "none";
+        }
+      </script>         
+  </head>
+  <body>
+    <p>Enter your Access ID and Access Key to generate an LMv1 token:</p>
+    <form>
+      <label for="access_id">Access ID:</label>
+      <input type="text" id="access_id" name="access_id"><br><br>
+
+      <label for="access_key">Access Key:</label>
+      <input type="password" id="access_key" name="access_key">
+
+      <button type="button" onclick="generateEncodedLmv1TokenAndCopyToClipboard()">Convert to Encoded LMv1 Token</button>
+      <button type="button" onclick="generateDecodedLmv1TokenAndCopyToClipboard(document.getElementById('lmv1_token').value)">Convert to Decoded LMv1 Token</button>
+    </form>
+
+    <div class="output">
+      <textarea id="lmv1_token" readonly></textarea>
+      <button class="copy-button" onclick="copyToClipboard('lmv1_token')">Copy</button>
+
+      <div id="copy_confirmation"></div>
+
+      <button id="back_button" onclick="location.href = 'index.html';">Back to Home Page</button>
+    </div>
+
+    <script>
+      function copyToClipboard(id) {
+        var text = document.getElementById(id).value;
+        var textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        showCopyConfirmation();
+      }
+
+      function showCopyConfirmation() {
+        var confirmationDiv = document.getElementById("copy_confirmation");
+        confirmationDiv.innerHTML = "LMv1 token copied to clipboard!";
+        confirmationDiv.style.display = "block";
+      }
+
+      function generateLmv1Token() {
+        var accessId = document.getElementById("access_id").value;
+        var accessKey = document.getElementById("access_key").value;
+        var lmv1Token = generateEncodedLmv1Token(accessId, accessKey);
+        document.getElementById("lmv1_token").value = lmv1Token;
+        document.getElementById("copy_confirmation").style.display = "none";
+      }
+    </script>
+  </body>
+</html>
